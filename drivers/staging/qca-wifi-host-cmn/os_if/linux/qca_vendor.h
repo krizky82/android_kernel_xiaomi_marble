@@ -5081,7 +5081,7 @@ enum qca_wlan_vendor_attr_config {
 	 * 1 - wfc is on.
 	 * 0 - wfc is off.
 	 */
-	QCA_WLAN_VENDOR_ATTR_CONFIG_WFC_STATE = 86,
+	QCA_WLAN_VENDOR_ATTR_CONFIG_WFC_STATE = 87,
 
 	/* keep last */
 	QCA_WLAN_VENDOR_ATTR_CONFIG_AFTER_LAST,
