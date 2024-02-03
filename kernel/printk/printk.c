@@ -2121,7 +2121,7 @@ asmlinkage __visible int printk(const char *fmt, ...)
 		    !strcmp(current->group_leader->comm, "displayfeature@") ||
 		    !strncmp(current->comm, "crtc_commit:", 12) ||
 		    !strncmp(current->comm, "disp_feature:", 13) ||
-		    !strcmp(current->group_leader->comm, "surfaceflinger")
+		    (!strncmp(current->comm, "SurfaceFlinger", 14) && !strcmp(current->group_leader->comm, "surfaceflinger"))
 		))
 			return 0;
 
