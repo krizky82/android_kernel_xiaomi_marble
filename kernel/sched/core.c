@@ -8005,6 +8005,7 @@ cpu_cgroup_css_alloc(struct cgroup_subsys_state *parent_css)
 
 #ifdef CONFIG_UCLAMP_ASSIST
 static void uclamp_set(struct cgroup_subsys_state *css);
+bool task_is_booster(struct task_struct *tsk);
 #endif
 
 /* Expose task group only after completing cgroup initialization */
@@ -8244,6 +8245,11 @@ static ssize_t cpu_uclamp_write(struct kernfs_open_file *of, char *buf,
 	struct uclamp_request req;
 	struct task_group *tg;
 
+#ifdef CONFIG_UCLAMP_ASSIST
+	if (task_is_booster(current))
+		return nbytes;
+#endif
+
 	req = capacity_from_percent(buf);
 	if (req.ret)
 		return req.ret;
@@ -8360,7 +8366,7 @@ static void uclamp_set(struct cgroup_subsys_state *css)
 		{"background",          "0",  "50",  0},  // 0-50%
 		{"system-background",   "0",  "60",  0},  // 0-60%
 		{"restricted",          "0",  "20",  0},  // 0-20%
-		{"camera-daemon",       "50", "max", 1},  // 50-100%
+		{"camera-daemon",       "20", "max", 1},  // 20-100%
 	};
 
 	if (!css->cgroup->kn)
